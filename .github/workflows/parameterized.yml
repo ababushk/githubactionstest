@@ -2,7 +2,7 @@ name: Parameterized workflow demo
 on:
   workflow_dispatch:
     inputs:
-      repoBranch:
+      anotherRepoBranch:
         description: 'another repo's branch'
         required: true
         default: 'main'
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "Repo branch: ${{ inputs.repoBranch }}"
+          echo "Repo branch: ${{ inputs.anotherRepoBranch }}"
           echo "Log level: $LEVEL"
           echo "Dry run: $DRYRUN"
           echo "Environment: $ENVIRONMENT"
