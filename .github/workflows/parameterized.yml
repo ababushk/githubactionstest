@@ -2,10 +2,6 @@ name: Parameterized workflow demo
 on:
   workflow_dispatch:
     inputs:
-      anotherRepoBranch:
-        description: 'another repo's branch'
-        required: true
-        default: 'main'
       logLevel:
         description: 'Log level'
         required: true
