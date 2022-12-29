@@ -15,9 +15,9 @@ on:
         description: 'Do not make any changes for real'
         required: false
         type: boolean
-      environment:
-        description: 'Environment to run tests against'
-        type: environment
+      anotherRepoBranch:
+        description: 'Branch in another repo to work with'
+        default: 'main'
         required: true
 jobs:
   log-the-inputs:
