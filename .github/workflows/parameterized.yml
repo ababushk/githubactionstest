@@ -1,0 +1,38 @@
+name: Parameterized workflow demo
+on:
+  workflow_dispatch:
+    inputs:
+      repoBranch:
+        description: 'another repo's branch'
+        required: true
+        default: 'main'
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+      dryRun:
+        description: 'Do not make any changes for real'
+        required: false
+        type: boolean
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
+jobs:
+  log-the-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Repo branch: ${{ inputs.repoBranch }}"
+          echo "Log level: $LEVEL"
+          echo "Dry run: $DRYRUN"
+          echo "Environment: $ENVIRONMENT"
+        env:
+          LEVEL: ${{ inputs.logLevel }}
+          DRYRUN: ${{ inputs.dryRun }}
+          ENVIRONMENT: ${{ inputs.environment }}
