@@ -33,7 +33,7 @@ jobs:
         with:
           # Optional
           # Token to authenticate requests to GitHub
-          # github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
           # Optional
           # Working directory for the backport action
