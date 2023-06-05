@@ -12,7 +12,7 @@ jobs:
           nc -zvw3 ababushk.file.core.windows.net 445
 
           sudo mkdir -p $MNT_PATH
-          sudo mount -t cifs //ababushk.file.core.windows.net/githubactionsccache $MNT_PATH username=$STORAGE_ACCOUNT_NAME,password=$STORAGE_ACCOUNT_KEY,serverino,nosharesock,actimeo=30,mfsymlinks
+          sudo mount -t cifs //ababushk.file.core.windows.net/githubactionsccache $MNT_PATH -o username=$STORAGE_ACCOUNT_NAME,password=$STORAGE_ACCOUNT_KEY,serverino,nosharesock,actimeo=30,mfsymlinks
 
           echo "Hello world" > $MNT_PATH/testfile
 
