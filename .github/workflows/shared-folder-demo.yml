@@ -1,0 +1,15 @@
+name: Parameterized workflow demo
+on:
+  workflow_dispatch:
+
+jobs:
+  mount-azure-drive:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          sudo apt update
+          sudo apt install -y cifs-utils netcat
+          nc -zvw3 ababushk.file.core.windows.net 445
+        env:
+          RESOURCE_GROUP_NAME: 'Azure-test'
+          STORAGE_ACCOUNT_NAME: 'ababushk'
