@@ -8,18 +8,17 @@ jobs:
     steps:
       - run: |
           sudo apt update
-          sudo apt install -y cifs-utils netcat
-          nc -zvw3 ababushk.file.core.windows.net 445
+          sudo apt install -y cifs-utils
 
           sudo mkdir -p $MNT_PATH
-          sudo mount -t cifs //ababushk.file.core.windows.net/githubactionsccache $MNT_PATH -o username=$STORAGE_ACCOUNT_NAME,password=$STORAGE_ACCOUNT_KEY,serverino,nosharesock,actimeo=30,mfsymlinks,uid=$(id -u),gid=$(id -g)
+          sudo mount -t cifs //${STORAGE_ACCOUNT_NAME}.file.core.windows.net/${FILE_SHARE_NAME}/ccache $MNT_PATH/ccache -o username=$STORAGE_ACCOUNT_NAME,password=$STORAGE_ACCOUNT_KEY,serverino,nosharesock,actimeo=30,mfsymlinks,uid=$(id -u),gid=$(id -g)
 
           echo "Hello world" > $MNT_PATH/hello_file.txt
           dd if=/dev/urandom of=$MNT_PATH/testfile.bin bs=1M count=50
         env:
-          RESOURCE_GROUP_NAME: 'Azure-test'
-          STORAGE_ACCOUNT_NAME: 'ababushk'
-          STORAGE_ACCOUNT_KEY: ${{ secrets.OPENVINO_AZURE_STORAGE_ACCOUNT_KEY }}
+          RESOURCE_GROUP_NAME: 'GithubActions'
+          STORAGE_ACCOUNT_NAME: 'gacaches'
+          STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_CACHES_STORAGE_ACCOUNT_KEY }}
           FILE_SHARE_NAME: 'githubactionsccache'
           MNT_ROOT: '/mount'
           MNT_PATH: '$MNT_ROOT/$STORAGE_ACCOUNT_NAME/$FILE_SHARE_NAME'
