@@ -20,6 +20,6 @@ jobs:
           RESOURCE_GROUP_NAME: 'GithubActions'
           STORAGE_ACCOUNT_NAME: 'gacaches'
           STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_CACHES_STORAGE_ACCOUNT_KEY }}
-          FILE_SHARE_NAME: 'githubactionsccache'
+          FILE_SHARE_NAME: 'caches'
           MNT_ROOT: '/mount'
           MNT_PATH: '$MNT_ROOT/$STORAGE_ACCOUNT_NAME/$FILE_SHARE_NAME'
