@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       TEST_REPORTS_DIR: ${{ github.workspace }}/path/to/test/reports
-  steps:
+    steps:
     - name: Create artifacts
       run: |
         echo "TEST_REPORTS_DIR (YAML expansion): ${{ env.TEST_REPORTS_DIR }}"
