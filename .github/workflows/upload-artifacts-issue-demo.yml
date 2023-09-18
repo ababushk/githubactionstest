@@ -48,7 +48,7 @@ jobs:
     - name: Upload artifacts # one file will be in the archive produced
       uses: actions/upload-artifact@v3
       with:
-        name: outside_container
+        name: inside_container
         path: |
           ${{ env.TEST_REPORTS_DIR }}/first_test_report.txt
           ${{ env.TEST_REPORTS_DIR }}/second_test_report.txt # will be ignored
