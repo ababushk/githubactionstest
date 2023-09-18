@@ -1,11 +1,56 @@
-name: Backport merged pull request
+name: Upload artifacts issue demo
 on:
   workflow_dispatch:
 jobs:
-  working:
-    name: Create and upload artifacts
+  works-outside-container:
+    name: Works outside container
     runs-on: ubuntu-20.04
+    env:
+      TEST_REPORTS_DIR: ${{ github.workspace }}/path/to/test/reports
   steps:
     - name: Create artifacts
       run: |
-        
+        echo "TEST_REPORTS_DIR (YAML expansion): ${{ env.TEST_REPORTS_DIR }}"
+        echo "TEST_REPORTS_DIR (shell expansion): ${TEST_REPORTS_DIR}"
+
+        mkdir -p ${TEST_REPORTS_DIR}
+        echo "First test report" >> ${TEST_REPORTS_DIR}/first_test_report.txt
+        echo "Second test report" >> ${TEST_REPORTS_DIR}/second_test_report.txt
+    
+    - name: Upload artifacts # two files will be in the archive produced
+      uses: actions/upload-artifact@v3
+      with:
+        name: outside_container
+        path: |
+          ${{ env.TEST_REPORTS_DIR }}/first_test_report.txt
+          ${{ env.TEST_REPORTS_DIR }}/second_test_report.txt
+      
+      if-no-files-found: 'error'
+
+
+  doesnt-work-in-container:
+    name: Doesn't work in container
+    runs-on: ubuntu-20.04
+    container:
+      image: ubuntu:20.04
+    env:
+      TEST_REPORTS_DIR: ${{ github.workspace }}/path/to/test/reports
+  steps:
+    - name: Create artifacts
+      run: |
+        echo "TEST_REPORTS_DIR (YAML expansion): ${{ env.TEST_REPORTS_DIR }}"
+        echo "TEST_REPORTS_DIR (shell expansion): ${TEST_REPORTS_DIR}"
+
+        mkdir -p ${TEST_REPORTS_DIR}
+        echo "First test report" >> ${TEST_REPORTS_DIR}/first_test_report.txt
+        echo "Second test report" >> ${TEST_REPORTS_DIR}/second_test_report.txt
+    
+    - name: Upload artifacts # one file will be in the archive produced
+      uses: actions/upload-artifact@v3
+      with:
+        name: outside_container
+        path: |
+          ${{ env.TEST_REPORTS_DIR }}/first_test_report.txt
+          ${{ env.TEST_REPORTS_DIR }}/second_test_report.txt # will be ignored
+      
+      if-no-files-found: 'error'
